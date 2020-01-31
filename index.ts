@@ -3,7 +3,15 @@ import * as fs from 'fs'
 import { join } from 'path'
 import * as childProcess from 'child_process'
 
-export async function npmRun(npmArgs: [string], cwd: string) {
+/**
+ * Executes an npm command, supported:
+ * ```
+ * npm install
+ * npm ci
+ * npm run build
+ * ```
+ */
+export async function npmRun(npmArgs: string[], cwd: string) {
   d('npmInstall')('')
   const command = 'npm'
   let args = npmArgs.join(' ')
@@ -13,15 +21,19 @@ export async function npmRun(npmArgs: [string], cwd: string) {
   const options = { cwd: cwd }
   console.log(`Executing ${`${command} ${args}`} in ${cwd}...`)
   try {
-    await execute(command, options, args)
+    return await execute(command, options, args)
   } catch (e) {
     throw new Error(`${`${command} install`} failed: ` + e.message)
   }
 }
 
+/**
+ * Returns true if package-lock.json exists.
+ */
 function pkgLockExists(lambdaFolder: string) {
   return fs.existsSync(join(lambdaFolder, 'package-lock.json'))
 }
+
 /**
  * Executes `command`. STDERR is emitted in real-time.
  *

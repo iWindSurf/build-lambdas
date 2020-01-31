@@ -3,5 +3,8 @@
   "dependencies": {
     "debug": "^4.1.1"
   },
-  "repository": {}
+  "repository": {},
+  "scripts": {
+    "build": "echo build succeeded"
+  }
 }

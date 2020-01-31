@@ -1,0 +1,22 @@
+{
+  "name": "build-lambdas",
+  "version": "0.0.1",
+  "description": "easily build your lambdas ",
+  "main": "index.js",
+  "scripts": {
+    "test": "prettier"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/orangewise/build-lambdas.git"
+  },
+  "author": "Ronald Luitwieler",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/orangewise/build-lambdas/issues"
+  },
+  "homepage": "https://github.com/orangewise/build-lambdas#readme",
+  "devDependencies": {
+    "typescript": "^3.7.5"
+  }
+}

@@ -1,35 +1,42 @@
 {
   "name": "build-lambdas",
-  "version": "0.0.1",
   "description": "easily build your lambdas ",
-  "main": "index.js",
-  "types": "index.d.ts",
-  "scripts": {
-    "build": "tsc",
-    "watch": "tsc -w",
-    "test": "jest -c jest.config.js",
-    "lint": "prettier -c prettier.config.js './**/*.ts' --ignore-path .prettierignore",
-    "lint:fix": "prettier -c prettier.config.js './**/*.ts' --write --ignore-path .prettierignore",
-    "prepublish": "tsc"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/orangewise/build-lambdas.git"
-  },
+  "version": "0.0.1",
   "author": "Ronald Luitwieler",
-  "license": "ISC",
   "bugs": {
     "url": "https://github.com/orangewise/build-lambdas/issues"
   },
-  "homepage": "https://github.com/orangewise/build-lambdas#readme",
   "dependencies": {
-    "debug": "^4.1.1"
+    "debug": "^4.1.1",
+    "fixpack": "^2.3.1"
   },
   "devDependencies": {
     "@types/debug": "^4.1.5",
     "@types/jest": "24.0.23",
     "@types/node": "^12.12.14",
+    "jest": "^25.1.0",
     "prettier": "^1.19.1",
+    "rimraf": "^3.0.1",
+    "ts-jest": "^25.1.0",
     "typescript": "^3.7.5"
-  }
+  },
+  "homepage": "https://github.com/orangewise/build-lambdas#readme",
+  "keywords": [
+    "build lambdas"
+  ],
+  "license": "ISC",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/orangewise/build-lambdas.git"
+  },
+  "scripts": {
+    "build": "tsc",
+    "lint": "prettier -c prettier.config.js './**/*.ts' --ignore-path .prettierignore",
+    "lint:fix": "fixpack && prettier -c prettier.config.js './**/*.ts' --write --ignore-path .prettierignore",
+    "prepublish": "tsc",
+    "test": "jest -c jest.config.js",
+    "watch": "tsc -w"
+  },
+  "types": "index.d.ts"
 }

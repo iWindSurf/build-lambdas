@@ -1,0 +1,7 @@
+{
+  "description": "lambda-with-lock-03",
+  "dependencies": {
+    "debug": "^4.1.1"
+  },
+  "repository": {}
+}

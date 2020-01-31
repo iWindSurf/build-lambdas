@@ -2,6 +2,29 @@ import { debug as d } from 'debug'
 import * as fs from 'fs'
 import { join } from 'path'
 import * as childProcess from 'child_process'
+import 'array-flat-polyfill'
+
+type JobType = {
+  args: any[]
+  cwd: string
+}[]
+
+export async function runParallel(jobs: JobType) {
+  await asyncForEach(jobs, async (job: any) => {
+    d('runParallel')({ job })
+    // check if there are nested arrays
+    if (job.args.length !== job.args.flat().length) {
+      d('runParallel.nested-array => wait for individual steps')(job.args)
+      job.args.forEach(async (nestedJobArg: any) => {
+        let jobArg = typeof nestedJobArg === 'string' ? [nestedJobArg] : nestedJobArg
+        d('runParallel.nested-array')(jobArg)
+        await npmRun(jobArg, job.cwd)
+      })
+    } else {
+      await npmRun(job.args, job.cwd)
+    }
+  })
+}
 
 /**
  * Executes an npm command, supported:
@@ -61,4 +84,10 @@ async function execute(cmd: string, opts: any, ...args: string[]) {
       }
     })
   })
+}
+
+async function asyncForEach(array: any, cb: any) {
+  for (let index = 0; index < array.length; index++) {
+    await cb(array[index], index, array)
+  }
 }

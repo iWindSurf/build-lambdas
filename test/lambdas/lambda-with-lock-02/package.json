@@ -1,0 +1,10 @@
+{
+  "description": "lambda-with-lock-02",
+  "dependencies": {
+    "debug": "^4.1.1"
+  },
+  "repository": {},
+  "scripts": {
+    "build": "echo build succeeded > build-succeeded.txt"
+  }
+}

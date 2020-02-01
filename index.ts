@@ -9,17 +9,12 @@ import * as rimraf from 'rimraf'
 import crypto from 'crypto'
 import 'array-flat-polyfill'
 
-type JobsType = {
-  args: any[]
-  cwd: string
-}[]
-
 type JobType = {
   args: any[]
   cwd: string
 }
 
-export async function runParallel(jobs: JobsType) {
+export async function runParallel(jobs: JobType[]) {
   await asyncForEach(jobs, async (job: any) => {
     d('runParallel')({ job })
     // check if there are nested arrays

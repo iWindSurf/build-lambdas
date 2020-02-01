@@ -7,7 +7,6 @@ import * as childProcess from 'child_process'
 import * as glob from 'glob'
 import * as rimraf from 'rimraf'
 import crypto from 'crypto'
-import 'array-flat-polyfill'
 
 type JobType = {
   args: any[]
@@ -17,8 +16,7 @@ type JobType = {
 export async function runParallel(jobs: JobType[]) {
   await asyncForEach(jobs, async (job: any) => {
     d('runParallel')({ job })
-    // check if there are nested arrays
-    if (job.args.length !== job.args.flat().length) {
+    if (hasNestedArray(job.args)) {
       d('runParallel.nested-array => wait for individual steps')(job.args)
       job.args.forEach(async (nestedJobArg: any) => {
         let jobArg = typeof nestedJobArg === 'string' ? [nestedJobArg] : nestedJobArg
@@ -31,10 +29,15 @@ export async function runParallel(jobs: JobType[]) {
   })
 }
 
+function hasNestedArray(array: []) {
+  return array.some(Array.isArray)
+}
+
 /**
  * Runs the correct function, based on the first argument in the job.args array. 
  */
 async function run(job: JobType) {
+  d('run')(job.args)
   const arg = job.args[0]
   switch (arg) {
     case 'ci':
@@ -42,6 +45,9 @@ async function run(job: JobType) {
     case 'install':
     case 'run':
       await npmRun(job.args, job.cwd)
+      break
+    case 'zip':
+      await zip(job.cwd)
       break
     default:
       console.log(`Nothing todo for ${arg}...`)
@@ -122,6 +128,12 @@ async function asyncForEach(array: any, cb: any) {
   for (let index = 0; index < array.length; index++) {
     await cb(array[index], index, array)
   }
+}
+
+async function zip(lambdaFolder: string) {
+  const zipName = join(process.cwd(), `${path.basename(lambdaFolder)}.zip`)
+  console.log(`Zipping ${lambdaFolder}...`)
+  await zipDirectory(lambdaFolder, zipName)
 }
 
 export function zipDirectory(directory: string, outputFile: string): Promise<void> {

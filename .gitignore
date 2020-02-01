@@ -1,12 +1,14 @@
 node_modules
 tsconfig.tsbuildinfo
+test/fixtures/lambdas/lambda-with-lock-02/build-succeeded.txt
 
 
 *.d.ts
 *.d.ts.map
 *.js
 *.js.map
+*.zip
 
 !jest.config.js
 !prettier.config.js
-test/fixtures/lambdas/lambda-with-lock-02/build-succeeded.txt
+!example.js

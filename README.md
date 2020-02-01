@@ -15,6 +15,9 @@ As a module:
 ```
 ```
 
+## License
+
+ISC
 
 
 [npm-badge]: https://badge.fury.io/js/build-lambdas.svg

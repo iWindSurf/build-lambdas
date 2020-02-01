@@ -48,6 +48,8 @@ export async function npmRun(npmArgs: string[], cwd: string) {
   let args = npmArgs.join(' ')
   if ((args === 'install' || args === 'i') && pkgLockExists(cwd)) {
     args = 'ci --only=production'
+  } else if (args === 'ci') {
+    args = 'ci --only=production'
   } else if (args === 'install' || args === 'i') {
     rimraf.sync(join(cwd, 'node_modules'))
     args = 'install --production'

@@ -1,0 +1,10 @@
+{
+  "description": "lambda-with-lock-b",
+  "dependencies": {
+    "debug": "^4.1.1"
+  },
+  "devDependencies": {
+    "cpu-count": "^1.0.0"
+  },
+  "repository": {}
+}

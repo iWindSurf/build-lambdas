@@ -1,7 +1,0 @@
-{
-  "description": "lambda-01",
-  "dependencies": {
-    "debug": "^4.1.1"
-  },
-  "repository": {}
-}

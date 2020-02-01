@@ -6,15 +6,20 @@ import { join } from 'path'
 import * as childProcess from 'child_process'
 import * as glob from 'glob'
 import * as rimraf from 'rimraf'
-import * as crypto from 'crypto'
+import crypto from 'crypto'
 import 'array-flat-polyfill'
 
-type JobType = {
+type JobsType = {
   args: any[]
   cwd: string
 }[]
 
-export async function runParallel(jobs: JobType) {
+type JobType = {
+  args: any[]
+  cwd: string
+}
+
+export async function runParallel(jobs: JobsType) {
   await asyncForEach(jobs, async (job: any) => {
     d('runParallel')({ job })
     // check if there are nested arrays
@@ -23,17 +28,36 @@ export async function runParallel(jobs: JobType) {
       job.args.forEach(async (nestedJobArg: any) => {
         let jobArg = typeof nestedJobArg === 'string' ? [nestedJobArg] : nestedJobArg
         d('runParallel.nested-array')(jobArg)
-        await npmRun(jobArg, job.cwd)
+        await run({ args: jobArg, cwd: job.cwd })
       })
     } else {
-      await npmRun(job.args, job.cwd)
+      await run({ args: job.args, cwd: job.cwd })
     }
   })
 }
 
 /**
+ * Runs the correct function, based on the first argument in the job.args array. 
+ */
+async function run(job: JobType) {
+  const arg = job.args[0]
+  switch (arg) {
+    case 'ci':
+    case 'i':
+    case 'install':
+    case 'run':
+      await npmRun(job.args, job.cwd)
+      break
+    default:
+      console.log(`Nothing todo for ${arg}...`)
+      return
+  }
+}
+
+/**
  * Executes an npm command, supported:
  * ```
+ * npm i
  * npm install
  * npm ci
  * npm run <script>

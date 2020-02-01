@@ -34,7 +34,7 @@ function hasNestedArray(array: []) {
 }
 
 /**
- * Runs the correct function, based on the first argument in the job.args array. 
+ * Runs the correct function, based on the first argument in the job.args array.
  */
 async function run(job: JobType) {
   d('run')(job.args)
@@ -63,7 +63,7 @@ async function run(job: JobType) {
  * npm ci
  * npm run <script>
  * ```
- * 
+ *
  * * node_modules folder is nuked before install
  * * only prod dependencies are installed
  */

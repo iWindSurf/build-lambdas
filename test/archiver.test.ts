@@ -40,32 +40,32 @@ test('zipDirectory can take a directory and produce a zip from it', async () => 
 })
 
 test('md5 hash of a zip stays consistent across invocations', async () => {
-  const stagingDir = await fs.mkdtemp(path.join(os.tmpdir(), 'test.archive'));
-  const zipFile1 = path.join(stagingDir, 'output.zip');
-  const zipFile2 = path.join(stagingDir, 'output.zip');
-  const originalDir = path.join(__dirname, 'fixtures', 'test-archive');
-  await zipDirectory(originalDir, zipFile1);
-  await new Promise(ok => setTimeout(ok, 2000)); // wait 2s
-  await zipDirectory(originalDir, zipFile2);
+  const stagingDir = await fs.mkdtemp(path.join(os.tmpdir(), 'test.archive'))
+  const zipFile1 = path.join(stagingDir, 'output.zip')
+  const zipFile2 = path.join(stagingDir, 'output.zip')
+  const originalDir = path.join(__dirname, 'fixtures', 'test-archive')
+  await zipDirectory(originalDir, zipFile1)
+  await new Promise(ok => setTimeout(ok, 2000)) // wait 2s
+  await zipDirectory(originalDir, zipFile2)
 
-  const hash1 = contentHash(await fs.readFile(zipFile1));
-  const hash2 = contentHash(await fs.readFile(zipFile2));
+  const hash1 = contentHash(await fs.readFile(zipFile1))
+  const hash2 = contentHash(await fs.readFile(zipFile2))
 
-  expect(hash1).toEqual(hash2);
-});
+  expect(hash1).toEqual(hash2)
+})
 
 test('zipDirectory follows symlinks', async () => {
-  const stagingDir = await fs.mkdtemp(path.join(os.tmpdir(), 'test.archive'));
-  const extractDir = await fs.mkdtemp(path.join(os.tmpdir(), 'test.archive.follow'));
+  const stagingDir = await fs.mkdtemp(path.join(os.tmpdir(), 'test.archive'))
+  const extractDir = await fs.mkdtemp(path.join(os.tmpdir(), 'test.archive.follow'))
   try {
-    const originalDir = path.join(__dirname, 'fixtures', 'test-archive-follow', 'data');
-    const zipFile = path.join(stagingDir, 'output.zip');
+    const originalDir = path.join(__dirname, 'fixtures', 'test-archive-follow', 'data')
+    const zipFile = path.join(stagingDir, 'output.zip')
 
-    await expect(zipDirectory(originalDir, zipFile)).resolves.toBeUndefined();
-    await expect(exec(`unzip ${zipFile}`, { cwd: extractDir })).resolves.toBeDefined();
-    await expect(exec(`diff -bur ${originalDir} ${extractDir}`)).resolves.toBeDefined();
+    await expect(zipDirectory(originalDir, zipFile)).resolves.toBeUndefined()
+    await expect(exec(`unzip ${zipFile}`, { cwd: extractDir })).resolves.toBeDefined()
+    await expect(exec(`diff -bur ${originalDir} ${extractDir}`)).resolves.toBeDefined()
   } finally {
-    await fs.remove(stagingDir);
-    await fs.remove(extractDir);
+    await fs.remove(stagingDir)
+    await fs.remove(extractDir)
   }
-});
+})

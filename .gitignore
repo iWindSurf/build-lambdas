@@ -12,3 +12,7 @@ test/fixtures/lambdas/lambda-with-lock-02/build-succeeded.txt
 !jest.config.js
 !prettier.config.js
 !example.js
+
+/lambda-with-lock-01
+/lambda-with-lock-02
+/lambda-with-lock-03

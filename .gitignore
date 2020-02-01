@@ -9,4 +9,4 @@ tsconfig.tsbuildinfo
 
 !jest.config.js
 !prettier.config.js
-test/lambdas/lambda-with-lock-02/build-succeeded.txt
+test/fixtures/lambdas/lambda-with-lock-02/build-succeeded.txt

@@ -4,7 +4,7 @@ import { join } from 'path'
 import * as rimraf from 'rimraf'
 
 test('npm install lambda-no-lock', async () => {
-  const lambdaFolder = join(__dirname, 'lambdas', 'lambda-no-lock')
+  const lambdaFolder = join(__dirname, 'fixtures', 'lambdas', 'lambda-no-lock')
   await npmRun(['install'], lambdaFolder)
   expect(fs.existsSync(join(lambdaFolder, 'node_modules', 'debug', 'package.json'))).toBe(true)
   // devDependencies are not installed.
@@ -12,7 +12,7 @@ test('npm install lambda-no-lock', async () => {
 })
 
 test('npm install lambda-with-lock-a', async () => {
-  const lambdaFolder = join(__dirname, 'lambdas', 'lambda-with-lock-a')
+  const lambdaFolder = join(__dirname, 'fixtures', 'lambdas', 'lambda-with-lock-a')
   await npmRun(['install'], lambdaFolder)
   expect(fs.existsSync(join(lambdaFolder, 'node_modules', 'debug', 'package.json'))).toBe(true)
   // devDependencies are not installed.
@@ -20,7 +20,7 @@ test('npm install lambda-with-lock-a', async () => {
 })
 
 test('npm ci lambda-with-lock-b', async () => {
-  const lambdaFolder = join(__dirname, 'lambdas', 'lambda-with-lock-b')
+  const lambdaFolder = join(__dirname, 'fixtures', 'lambdas', 'lambda-with-lock-b')
   await npmRun(['ci'], lambdaFolder)
   expect(fs.existsSync(join(lambdaFolder, 'node_modules', 'debug', 'package.json'))).toBe(true)
   // devDependencies are not installed.
@@ -28,15 +28,15 @@ test('npm ci lambda-with-lock-b', async () => {
 })
 
 test('npm build', async () => {
-  const lambdaFolder = join(__dirname, 'lambdas', 'lambda-no-lock')
+  const lambdaFolder = join(__dirname, 'fixtures', 'lambdas', 'lambda-no-lock')
   const stdout = await npmRun(['run', 'build'], lambdaFolder)
   expect(stdout).toMatch('build succeeded')
 })
 
 test('run Parallel', async () => {
-  const lambdaFolder01 = join('test', 'lambdas', 'lambda-with-lock-01')
-  const lambdaFolder02 = join('test', 'lambdas', 'lambda-with-lock-02')
-  const lambdaFolder03 = join('test', 'lambdas', 'lambda-with-lock-03')
+  const lambdaFolder01 = join('test', 'fixtures', 'lambdas', 'lambda-with-lock-01')
+  const lambdaFolder02 = join('test', 'fixtures', 'lambdas', 'lambda-with-lock-02')
+  const lambdaFolder03 = join('test', 'fixtures', 'lambdas', 'lambda-with-lock-03')
   rimraf.sync(join(lambdaFolder02, 'build-succeeded.txt'))
 
   await runParallel([

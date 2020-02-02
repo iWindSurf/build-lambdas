@@ -16,7 +16,7 @@ type JobType = {
 export async function runParallel(jobs: JobType[]) {
   await asyncForEach(jobs, async (job: any) => {
     d('runParallel')({ job })
-    if (hasNestedArray(job.args)) {
+    if (job.args.length > 1) {
       d('runParallel.nested-array => wait for individual steps')(job.args)
       job.args.forEach(async (nestedJobArg: any) => {
         let jobArg = typeof nestedJobArg === 'string' ? [nestedJobArg] : nestedJobArg
@@ -27,10 +27,6 @@ export async function runParallel(jobs: JobType[]) {
       await run({ args: job.args, cwd: job.cwd })
     }
   })
-}
-
-function hasNestedArray(array: []) {
-  return array.some(Array.isArray)
 }
 
 /**
@@ -50,7 +46,13 @@ async function run(job: JobType) {
       await zip(job.cwd)
       break
     default:
-      console.log(`Nothing todo for ${arg}...`)
+      if (typeof job.args === 'function') {
+        let fnc = <Function>job.args
+        console.log(`Run ${fnc}`)
+        await fnc()
+      } else {
+        console.log(`Nothing todo for ${arg}...`)
+      }
       return
   }
 }

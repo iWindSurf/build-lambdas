@@ -16,3 +16,4 @@ test/fixtures/lambdas/lambda-with-lock-02/build-succeeded.txt
 /lambda-with-lock-01
 /lambda-with-lock-02
 /lambda-with-lock-03
+/lambda_with-custom-zip-filename

@@ -1,4 +1,4 @@
-import { npmRun, runParallel } from '..'
+import { npmRun, runParallel, zipDirectory } from '..'
 import * as fs from 'fs'
 import { join } from 'path'
 import * as rimraf from 'rimraf'
@@ -53,13 +53,14 @@ test('run Parallel', async () => {
 
 test('run Parallel with customFunction', async () => {
   const lambdaFolder01 = join('test', 'fixtures', 'lambdas', 'lambda-with-lock-c')
-  rimraf.sync(join(lambdaFolder01, 'custom-function.txt'))
+  rimraf.sync(join(lambdaFolder01, 'lambda_with-custom-zip-filename.zip'))
 
-  async function customFunction() {
-    return fs.writeFileSync(join(lambdaFolder01, 'custom-function.txt'), 'hello')
+  async function customZip() {
+    return await zipDirectory(lambdaFolder01, join(lambdaFolder01, 'lambda_with-custom-zip-filename.zip'))
   }
 
-  await runParallel([{ args: ['install', customFunction], cwd: lambdaFolder01 }])
+  await runParallel([{ args: ['install', customZip], cwd: lambdaFolder01 }])
   expect(fs.existsSync(join(lambdaFolder01, 'node_modules', 'debug', 'package.json'))).toBe(true)
-  expect(fs.existsSync(join(lambdaFolder01, 'custom-function.txt'))).toBe(true)
+  expect(fs.existsSync(join(lambdaFolder01, 'lambda_with-custom-zip-filename.zip'))).toBe(true)
 }, TIMEOUT)
+

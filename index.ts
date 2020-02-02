@@ -34,7 +34,14 @@ export async function runParallel(jobs: JobType[]) {
  */
 async function run(job: JobType) {
   d('run')(job.args)
-  const arg = job.args[0]
+  let arg: string = ''
+  let fnc: Function = () => { }
+  if (typeof job.args === 'function') {
+    fnc = <Function>job.args
+    arg = 'function'
+  } else {
+    arg = job.args[0]
+  }
   switch (arg) {
     case 'ci':
     case 'i':
@@ -45,16 +52,12 @@ async function run(job: JobType) {
     case 'zip':
       await zip(job.cwd)
       break
+    case 'function':
+      await fnc()
+      break
     default:
-      if (typeof job.args === 'function') {
-        let fnc = <Function>job.args
-        console.log(`Run ${fnc}`)
-        await fnc()
-        break
-      } else {
-        console.log(`Nothing todo for ${arg}...`)
-        return
-      }
+      console.log(`Nothing todo for ${arg}...`)
+      return
   }
 }
 

@@ -51,7 +51,7 @@ test('run Parallel', async () => {
   expect(fs.existsSync(join(lambdaFolder03, 'node_modules', 'debug', 'package.json'))).toBe(true)
 }, TIMEOUT)
 
-// test fails on github :(
+// TODO: test fails on github :(
 // test('run Parallel with customFunction', async () => {
 //   expect.assertions(2)
 //   const lambdaFolder01 = join('test', 'fixtures', 'lambdas', 'lambda-with-lock-c')

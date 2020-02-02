@@ -64,5 +64,5 @@ test('run Parallel with customFunction', async () => {
   await runParallel([{ args: ['install', customZip], cwd: lambdaFolder01 }])
   expect(fs.existsSync(join(lambdaFolder01, 'node_modules', 'debug', 'package.json'))).toBe(true)
   expect(fs.existsSync(join(lambdaFolder01, 'lambda_with-custom-zip-filename.zip'))).toBe(true)
-}, 100000)
+}, 1000000)
 

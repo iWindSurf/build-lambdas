@@ -48,4 +48,17 @@ test('run Parallel', async () => {
   expect(fs.existsSync(join(lambdaFolder02, 'node_modules', 'debug', 'package.json'))).toBe(true)
   expect(fs.existsSync(join(lambdaFolder02, 'build-succeeded.txt'))).toBe(true)
   expect(fs.existsSync(join(lambdaFolder03, 'node_modules', 'debug', 'package.json'))).toBe(true)
-}, 50000)
+}, 60000)
+
+test('run Parallel with customFunction', async () => {
+  const lambdaFolder01 = join('test', 'fixtures', 'lambdas', 'lambda-with-lock-c')
+  rimraf.sync(join(lambdaFolder01, 'custom-function.txt'))
+
+  function customFunction() {
+    fs.writeFileSync(join(lambdaFolder01, 'custom-function.txt'), 'hello')
+  }
+
+  await runParallel([{ args: ['install', customFunction], cwd: lambdaFolder01 }])
+  expect(fs.existsSync(join(lambdaFolder01, 'node_modules', 'debug', 'package.json'))).toBe(true)
+  expect(fs.existsSync(join(lambdaFolder01, 'custom-function.txt'))).toBe(true)
+}, 10000)

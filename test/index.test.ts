@@ -2,7 +2,7 @@ import { npmRun, runParallel, zipDirectory } from '..'
 import * as fs from 'fs'
 import { join } from 'path'
 import * as rimraf from 'rimraf'
-const TIMEOUT = 80000
+const TIMEOUT = 100000
 
 test('npm install lambda-no-lock', async () => {
   const lambdaFolder = join(__dirname, 'fixtures', 'lambdas', 'lambda-no-lock')

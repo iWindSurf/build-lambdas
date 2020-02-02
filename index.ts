@@ -50,10 +50,11 @@ async function run(job: JobType) {
         let fnc = <Function>job.args
         console.log(`Run ${fnc}`)
         await fnc()
+        break
       } else {
         console.log(`Nothing todo for ${arg}...`)
+        return
       }
-      return
   }
 }
 

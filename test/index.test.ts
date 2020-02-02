@@ -2,6 +2,7 @@ import { npmRun, runParallel } from '..'
 import * as fs from 'fs'
 import { join } from 'path'
 import * as rimraf from 'rimraf'
+const TIMEOUT = 80000
 
 test('npm install lambda-no-lock', async () => {
   const lambdaFolder = join(__dirname, 'fixtures', 'lambdas', 'lambda-no-lock')
@@ -48,17 +49,17 @@ test('run Parallel', async () => {
   expect(fs.existsSync(join(lambdaFolder02, 'node_modules', 'debug', 'package.json'))).toBe(true)
   expect(fs.existsSync(join(lambdaFolder02, 'build-succeeded.txt'))).toBe(true)
   expect(fs.existsSync(join(lambdaFolder03, 'node_modules', 'debug', 'package.json'))).toBe(true)
-}, 60000)
+}, TIMEOUT)
 
 test('run Parallel with customFunction', async () => {
   const lambdaFolder01 = join('test', 'fixtures', 'lambdas', 'lambda-with-lock-c')
   rimraf.sync(join(lambdaFolder01, 'custom-function.txt'))
 
-  function customFunction() {
-    fs.writeFileSync(join(lambdaFolder01, 'custom-function.txt'), 'hello')
+  async function customFunction() {
+    return fs.writeFileSync(join(lambdaFolder01, 'custom-function.txt'), 'hello')
   }
 
   await runParallel([{ args: ['install', customFunction], cwd: lambdaFolder01 }])
   expect(fs.existsSync(join(lambdaFolder01, 'node_modules', 'debug', 'package.json'))).toBe(true)
   expect(fs.existsSync(join(lambdaFolder01, 'custom-function.txt'))).toBe(true)
-}, 10000)
+}, TIMEOUT)

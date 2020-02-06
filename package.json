@@ -43,7 +43,7 @@
     "lint": "prettier -c prettier.config.js './**/*.ts' --ignore-path .prettierignore",
     "lint:fix": "fixpack && prettier -c prettier.config.js './**/*.ts' --write --ignore-path .prettierignore",
     "prepare": "tsc",
-    "test": "jest -c jest.config.js --detectOpenHandles",
+    "test": "jest -c jest.config.js",
     "watch": "tsc -w"
   },
   "types": "index.d.ts"

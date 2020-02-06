@@ -50,18 +50,3 @@ test('run Parallel', async () => {
   expect(fs.existsSync(join(lambdaFolder02, 'build-succeeded.txt'))).toBe(true)
   expect(fs.existsSync(join(lambdaFolder03, 'node_modules', 'debug', 'package.json'))).toBe(true)
 }, TIMEOUT)
-
-// TODO: test fails on github :(
-// test('run Parallel with customFunction', async () => {
-//   const lambdaFolder01 = join('test', 'fixtures', 'lambdas', 'lambda-with-lock-c')
-//   rimraf.sync(join(lambdaFolder01, 'lambda_with-custom-zip-filename.zip'))
-
-//   async function customZip() {
-//     return await zipDirectory(lambdaFolder01, join(lambdaFolder01, 'lambda_with-custom-zip-filename.zip'))
-//   }
-
-//   await runParallel([{ args: ['install', customZip], cwd: lambdaFolder01 }])
-//   expect(fs.existsSync(join(lambdaFolder01, 'node_modules', 'debug', 'package.json'))).toBe(true)
-//   expect(fs.existsSync(join(lambdaFolder01, 'lambda_with-custom-zip-filename.zip'))).toBe(true)
-// }, TIMEOUT)
-

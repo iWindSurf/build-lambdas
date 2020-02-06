@@ -133,12 +133,13 @@ async function execute(cmd: string, opts: any, ...args: string[]) {
 
 async function zip(lambdaFolder: string) {
   const zipName = join(process.cwd(), `${path.basename(lambdaFolder)}.zip`)
-  console.log(`Zipping ${lambdaFolder} into ${zipName}...`)
   await zipDirectory(lambdaFolder, zipName)
 }
 
 export async function zipDirectory(directory: string, outputFile: string): Promise<void> {
   return new Promise(async (ok, fail) => {
+    console.log(`Zipping ${directory} => ${outputFile}...`)
+
     // The below options are needed to support following symlinks when building zip files:
     // - nodir: This will prevent symlinks themselves from being copied into the zip.
     // - follow: This will follow symlinks and copy the files within.

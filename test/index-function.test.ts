@@ -11,7 +11,7 @@ test('run Parallel with customFunction', async () => {
   rimraf.sync(join(lambdaFolder01, 'lambda_with-custom-zip-filename.zip'))
 
   async function customZip() {
-    return await zipDirectory(lambdaFolder01, join(lambdaFolder01, 'lambda_with-custom-zip-filename.zip'))
+    return zipDirectory(lambdaFolder01, join(lambdaFolder01, 'lambda_with-custom-zip-filename.zip'))
   }
 
   await runParallel([{ args: ['install', customZip], cwd: lambdaFolder01 }])

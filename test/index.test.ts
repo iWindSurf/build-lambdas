@@ -10,7 +10,7 @@ test('npm install lambda-no-lock', async () => {
   expect(fs.existsSync(join(lambdaFolder, 'node_modules', 'debug', 'package.json'))).toBe(true)
   // devDependencies are not installed.
   expect(fs.existsSync(join(lambdaFolder, 'node_modules', 'cpu-count', 'package.json'))).toBe(false)
-})
+}, TIMEOUT)
 
 test('npm install lambda-with-lock-a', async () => {
   const lambdaFolder = join(__dirname, 'fixtures', 'lambdas', 'lambda-with-lock-a')
@@ -18,7 +18,7 @@ test('npm install lambda-with-lock-a', async () => {
   expect(fs.existsSync(join(lambdaFolder, 'node_modules', 'debug', 'package.json'))).toBe(true)
   // devDependencies are not installed.
   expect(fs.existsSync(join(lambdaFolder, 'node_modules', 'cpu-count', 'package.json'))).toBe(false)
-})
+}, TIMEOUT)
 
 test('npm ci lambda-with-lock-b', async () => {
   const lambdaFolder = join(__dirname, 'fixtures', 'lambdas', 'lambda-with-lock-b')
@@ -26,13 +26,13 @@ test('npm ci lambda-with-lock-b', async () => {
   expect(fs.existsSync(join(lambdaFolder, 'node_modules', 'debug', 'package.json'))).toBe(true)
   // devDependencies are not installed.
   expect(fs.existsSync(join(lambdaFolder, 'node_modules', 'cpu-count', 'package.json'))).toBe(false)
-})
+}, TIMEOUT)
 
 test('npm build', async () => {
   const lambdaFolder = join(__dirname, 'fixtures', 'lambdas', 'lambda-no-lock')
   const stdout = await npmRun(['run', 'build'], lambdaFolder)
   expect(stdout).toMatch('build succeeded')
-})
+}, TIMEOUT)
 
 test('run Parallel', async () => {
   const lambdaFolder01 = join('test', 'fixtures', 'lambdas', 'lambda-with-lock-01')

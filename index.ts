@@ -142,7 +142,7 @@ async function zip(lambdaFolder: string) {
   await zipDirectory(lambdaFolder, zipName)
 }
 
-export function zipDirectory(directory: string, outputFile: string): Promise<void> {
+export async function zipDirectory(directory: string, outputFile: string): Promise<void> {
   return new Promise(async (ok, fail) => {
     // The below options are needed to support following symlinks when building zip files:
     // - nodir: This will prevent symlinks themselves from being copied into the zip.

@@ -1,7 +1,7 @@
 {
   "name": "build-lambdas",
   "description": "easily build your lambdas ",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "author": "Ronald Luitwieler",
   "bugs": {
     "url": "https://github.com/orangewise/build-lambdas/issues"

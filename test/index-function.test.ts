@@ -2,7 +2,7 @@ import { runParallel, zipDirectory } from '..'
 import * as fs from 'fs'
 import { join } from 'path'
 import * as rimraf from 'rimraf'
-const TIMEOUT = 1000000
+const TIMEOUT = 10000
 
 
 // TODO: test fails on github :(

@@ -48,14 +48,10 @@ async function run(job: JobType) {
     case 'i':
     case 'install':
     case 'run':
-      console.log('await npmRun')
       await npmRun(job.args, job.cwd)
-      console.log('npmRun done')
       break
     case 'zip':
-      console.log('await zip')
       await zip(job.cwd)
-      console.log('zip done')
       break
     case 'function':
       await fnc()

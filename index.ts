@@ -79,12 +79,12 @@ export async function npmRun(npmArgs: string[], cwd: string) {
   const command = 'npm'
   let args = npmArgs.join(' ')
   if ((args === 'install' || args === 'i') && pkgLockExists(cwd)) {
-    args = 'ci --only=production'
+    args = 'ci --only=production --quiet --no-progress'
   } else if (args === 'ci') {
-    args = 'ci --only=production'
+    args = 'ci --only=production --quiet --no-progress'
   } else if (args === 'install' || args === 'i') {
     rimraf.sync(join(cwd, 'node_modules'))
-    args = 'install --production'
+    args = 'install --production --quiet --no-progress'
   }
   const options = { cwd: cwd }
   console.log(`Executing ${`${command} ${args}`} in ${cwd}...`)
@@ -133,7 +133,7 @@ async function execute(cmd: string, opts: any, ...args: string[]) {
 
 async function zip(lambdaFolder: string) {
   const zipName = join(process.cwd(), `${path.basename(lambdaFolder)}.zip`)
-  console.log(`Zipping ${lambdaFolder}...`)
+  console.log(`Zipping ${lambdaFolder} into ${zipName}...`)
   await zipDirectory(lambdaFolder, zipName)
 }
 

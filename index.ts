@@ -14,19 +14,20 @@ type JobType = {
 }
 
 export async function runParallel(jobs: JobType[]) {
-  await asyncForEach(jobs, async (job: any) => {
+  await Promise.all(jobs.map(async job => {
     d('runParallel')({ job })
     if (job.args.length > 1) {
       d('runParallel.nested-array => wait for individual steps')(job.args)
-      job.args.forEach(async (nestedJobArg: any) => {
+      for (const nestedJobArg of job.args) {
         let jobArg = typeof nestedJobArg === 'string' ? [nestedJobArg] : nestedJobArg
         d('runParallel.nested-array')(jobArg)
         await run({ args: jobArg, cwd: job.cwd })
-      })
+        d('runParallel.nested-array-done')(jobArg)
+      }
     } else {
       await run({ args: job.args, cwd: job.cwd })
     }
-  })
+  }))
 }
 
 /**
@@ -47,10 +48,14 @@ async function run(job: JobType) {
     case 'i':
     case 'install':
     case 'run':
+      console.log('await npmRun')
       await npmRun(job.args, job.cwd)
+      console.log('npmRun done')
       break
     case 'zip':
+      console.log('await zip')
       await zip(job.cwd)
+      console.log('zip done')
       break
     case 'function':
       await fnc()
@@ -128,12 +133,6 @@ async function execute(cmd: string, opts: any, ...args: string[]) {
       }
     })
   })
-}
-
-async function asyncForEach(array: any, cb: any) {
-  for (let index = 0; index < array.length; index++) {
-    await cb(array[index], index, array)
-  }
 }
 
 async function zip(lambdaFolder: string) {

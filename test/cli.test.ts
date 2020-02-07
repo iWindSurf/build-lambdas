@@ -7,7 +7,7 @@ test('build-lambdas run', async () => {
   rimraf.sync('test/fixtures/lambdas/lambda-with-lock-cli/test.zip')
 
   await exec(`
-    build-lambdas run \
+    bin/build-lambdas.js run \
     -s install,run-build,zip \
     -l test/fixtures/lambdas/lambda-with-lock-cli/ \
     -o test/fixtures/lambdas/lambda-with-lock-cli/test.zip`)

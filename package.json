@@ -1,7 +1,7 @@
 {
   "name": "build-lambdas",
   "description": "easily build your lambdas ",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "author": "Ronald Luitwieler",
   "bin": {
     "build-lambdas": "bin/build-lambdas.js"

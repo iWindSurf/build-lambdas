@@ -27,7 +27,7 @@ const args: Argv = yargs
         desc: 'The name of the output (zip) file',
         requiresArg: true
       })
-      .demandOption(['steps', 'lambdaFolder', 'outputFile'])
+      .demandOption(['steps', 'outputFile'])
   )
   .demandCommand() // just print help
   .help()
@@ -37,9 +37,8 @@ const [cmd] = args.argv._
 
 switch (cmd) {
   case 'run':
-    const { steps, lambdaFolder, outputFile } = args.argv
-    d('build-lambdas.run')({ steps, lambdaFolder, outputFile })
-
+    let { steps, lambdaFolder, outputFile } = args.argv
+    lambdaFolder = lambdaFolder || process.cwd()
     const stepsToRun = stepsFromOption(steps as string, lambdaFolder as string, outputFile as string)
     run(stepsToRun, lambdaFolder as string)
     break

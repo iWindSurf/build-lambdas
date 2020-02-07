@@ -1,5 +1,5 @@
 {
-  "description": "lambda-with-lock-cli",
+  "description": "lambda-with-lock-cli-02",
   "dependencies": {
     "debug": "^4.1.1"
   },

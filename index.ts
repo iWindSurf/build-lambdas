@@ -14,20 +14,22 @@ type JobType = {
 }
 
 export async function runParallel(jobs: JobType[]) {
-  await Promise.all(jobs.map(async job => {
-    d('runParallel')({ job })
-    if (job.args.length > 1) {
-      d('runParallel.nested-array => wait for individual steps')(job.args)
-      for (const nestedJobArg of job.args) {
-        let jobArg = typeof nestedJobArg === 'string' ? [nestedJobArg] : nestedJobArg
-        d('runParallel.nested-array')(jobArg)
-        await run({ args: jobArg, cwd: job.cwd })
-        d('runParallel.nested-array-done')(jobArg)
+  await Promise.all(
+    jobs.map(async job => {
+      d('runParallel')({ job })
+      if (job.args.length > 1) {
+        d('runParallel.nested-array => wait for individual steps')(job.args)
+        for (const nestedJobArg of job.args) {
+          let jobArg = typeof nestedJobArg === 'string' ? [nestedJobArg] : nestedJobArg
+          d('runParallel.nested-array')(jobArg)
+          await run({ args: jobArg, cwd: job.cwd })
+          d('runParallel.nested-array-done')(jobArg)
+        }
+      } else {
+        await run({ args: job.args, cwd: job.cwd })
       }
-    } else {
-      await run({ args: job.args, cwd: job.cwd })
-    }
-  }))
+    })
+  )
 }
 
 /**
@@ -36,7 +38,7 @@ export async function runParallel(jobs: JobType[]) {
 async function run(job: JobType) {
   d('run')(job.args)
   let arg: string = ''
-  let fnc: Function = () => { }
+  let fnc: Function = () => {}
   if (typeof job.args === 'function') {
     fnc = <Function>job.args
     arg = 'function'

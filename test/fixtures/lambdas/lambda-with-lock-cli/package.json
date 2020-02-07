@@ -1,0 +1,14 @@
+{
+  "description": "lambda-with-lock-cli",
+  "dependencies": {
+    "debug": "^4.1.1"
+  },
+  "devDependencies": {
+    "cpu-count": "^1.0.0"
+  },
+  "license": "ISC",
+  "repository": {},
+  "scripts": {
+    "build": "echo build succeeded"
+  }
+}

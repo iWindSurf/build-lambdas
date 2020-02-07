@@ -48,4 +48,4 @@ test('run Parallel', async () => {
   expect(fs.existsSync(join(lambdaFolder02, 'node_modules', 'debug', 'package.json'))).toBe(true)
   expect(fs.existsSync(join(lambdaFolder02, 'build-succeeded.txt'))).toBe(true)
   expect(fs.existsSync(join(lambdaFolder03, 'node_modules', 'debug', 'package.json'))).toBe(true)
-})
+}, 10000)

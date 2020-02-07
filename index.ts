@@ -33,8 +33,8 @@ export async function runParallel(jobs: JobType[]) {
 async function run(job: JobType) {
   d('run')(job.args)
   let arg: string = ''
-  let fnc: Function = () => { } // init fnc
-  d('run (typeof job.args)')(typeof job.args === 'function')  
+  let fnc: Function = () => {} // init fnc
+  d('run (typeof job.args)')(typeof job.args === 'function')
   if (typeof job.args === 'function') {
     fnc = <Function>job.args
     arg = 'function'

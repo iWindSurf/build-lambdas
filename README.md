@@ -1,6 +1,6 @@
 # build-lambdas
 
-![Node.js CI](https://github.com/orangewise/build-lambdas/workflows/Node.js%20CI/badge.svg)
+[![Node.js CI][ci-badge]][ci-url]
 [![npm version][npm-badge]][npm-url]
 
 Utility to build your lambdas in parallel.
@@ -46,3 +46,6 @@ ISC
 
 [npm-badge]: https://badge.fury.io/js/build-lambdas.svg
 [npm-url]: https://badge.fury.io/js/build-lambdas
+
+[ci-badge]: https://github.com/orangewise/build-lambdas/workflows/Node.js%20CI/badge.svg
+[ci-url]: https://github.com/orangewise/build-lambdas/actions

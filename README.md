@@ -15,7 +15,7 @@ As a module:
 ```javascript
 const path = require('path')
 const join = path.join
-const buildLambdas = require('.')
+const buildLambdas = require('build-lambdas')
 
 const lambdaFolder01 = join('test', 'fixtures', 'lambdas', 'lambda-with-lock-01')
 const lambdaFolder02 = join('test', 'fixtures', 'lambdas', 'lambda-with-lock-02')
@@ -33,7 +33,7 @@ async function buildAndZip() {
 
 // My own zip function:
 async function customZip() {
-  return buildLambdas.zipDirectory(lambdaFolderA, 'lambda_with-custom-zip-filename.zip')
+  return buildLambdas.zipDirectory(lambdaFolderA, 'lambda-with-custom-zip-filename.zip')
 }
 
 buildAndZip()

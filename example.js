@@ -18,7 +18,7 @@ async function buildAndZip() {
 
 // My own zip function:
 async function customZip() {
-  return buildLambdas.zipDirectory(lambdaFolderA, 'lambda_with-custom-zip-filename.zip')
+  return buildLambdas.zipDirectory(lambdaFolderA, 'lambda-with-custom-zip-filename.zip')
 }
 
 buildAndZip()

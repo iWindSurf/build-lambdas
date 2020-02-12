@@ -160,6 +160,7 @@ export async function zipDirectory(directory: string, outputFile: string): Promi
     for (const file of files) {
       const fullPath = path.join(directory, file)
       const [data, stat] = await Promise.all([fs.readFile(fullPath), fs.stat(fullPath)])
+      stat.mode = parseInt('40755', 8)
       archive.append(data, {
         name: file,
         date: new Date('1980-01-01T00:00:00.000Z'), // reset dates to get the same hash for the same content

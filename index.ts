@@ -1,4 +1,6 @@
 const archiver = require('archiver')
+const pLimit = require('p-limit')
+const cpuCount = require('os').cpus().length
 import { debug as d } from 'debug'
 import * as fs from 'fs-extra'
 import * as path from 'path'
@@ -14,8 +16,10 @@ type JobType = {
 }
 
 export async function runParallel(jobs: JobType[]) {
-  await Promise.all(
-    jobs.map(async job => {
+  d('runParallel.cpuCount')(cpuCount)
+  const limit = pLimit(cpuCount)
+  const j = jobs.map(job => {
+    return limit(async () => {
       d('runParallel.nested-array => wait for individual steps')(job.args)
       for (const nestedJobArg of job.args) {
         let jobArg = typeof nestedJobArg === 'string' ? [nestedJobArg] : nestedJobArg
@@ -24,7 +28,8 @@ export async function runParallel(jobs: JobType[]) {
         d('runParallel.nested-array-done')(jobArg)
       }
     })
-  )
+  })
+  await Promise.all(j)
 }
 
 /**

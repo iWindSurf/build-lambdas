@@ -18,7 +18,6 @@ type JobType = {
 export async function runParallel(jobs: JobType[]) {
   d('runParallel.cpuCount')(cpuCount)
   const limit = pLimit(cpuCount)
-
   const j = jobs.map(job => {
     return limit(async () => {
       d('runParallel.nested-array => wait for individual steps')(job.args)

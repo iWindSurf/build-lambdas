@@ -16,21 +16,21 @@ type JobType = {
 }
 
 export async function runParallel(jobs: JobType[]) {
+  d('runParallel.cpuCount')(cpuCount)
   const limit = pLimit(cpuCount)
 
-  await Promise.all(
-    jobs.map(job => {
-      limit(async () => {
-        d('runParallel.nested-array => wait for individual steps')(job.args)
-        for (const nestedJobArg of job.args) {
-          let jobArg = typeof nestedJobArg === 'string' ? [nestedJobArg] : nestedJobArg
-          d('runParallel.nested-array')(jobArg)
-          await run({ args: jobArg, cwd: job.cwd })
-          d('runParallel.nested-array-done')(jobArg)
-        }
-      })
+  const j = jobs.map(job => {
+    return limit(async () => {
+      d('runParallel.nested-array => wait for individual steps')(job.args)
+      for (const nestedJobArg of job.args) {
+        let jobArg = typeof nestedJobArg === 'string' ? [nestedJobArg] : nestedJobArg
+        d('runParallel.nested-array')(jobArg)
+        await run({ args: jobArg, cwd: job.cwd })
+        d('runParallel.nested-array-done')(jobArg)
+      }
     })
-  )
+  })
+  await Promise.all(j)
 }
 
 /**
